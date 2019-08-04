@@ -17,6 +17,4 @@ if [ ! -f /data/eula.txt ]; then
   fi
 fi
 cd /data
-if [[ ! -f /data/server.properties ]]; then
-    java -jar /minecraft/$1.jar
-fi
+java -jar /minecraft/$1.jar
