@@ -9,6 +9,9 @@ env:
   - TAG=1.14.4-R0.1-SNAPSHOT
   - TAG=latest
 
+before_install:
+  - chmod +x travis-build.sh
+
 install:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
