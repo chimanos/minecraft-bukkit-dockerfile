@@ -17,4 +17,9 @@ if [ ! -f /data/eula.txt ]; then
   fi
 fi
 cd /data
-java -jar /minecraft/$1.jar
+if [[ "$TRAVIS" = true ]]; then
+    echo "stop" | java -jar /minecraft/$1.jar
+else
+    java -jar /minecraft/$1.jar
+fi
+
