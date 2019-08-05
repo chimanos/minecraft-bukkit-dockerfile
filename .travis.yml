@@ -1,0 +1,16 @@
+sudo: required
+
+language: bash
+
+services:
+  - docker
+
+env:
+  - TAG=1.14.4-R0.1-SNAPSHOT
+  - TAG=latest
+
+install:
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+
+script:
+  - ./travis-build.sh
