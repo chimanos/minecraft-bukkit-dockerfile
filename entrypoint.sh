@@ -1,6 +1,7 @@
 #!/bin/bash
 
 #Solution borrowed from https://github.com/itzg/dockerfiles/blob/master/minecraft-server/start-minecraft.sh
+#Inspired by https://github.com/bbriggs/docker-bukkit
 if [ ! -f /data/eula.txt ]; then
   if [ "$EULA" != "" ]; then
     echo "# Generated via Docker on $(date)" > eula.txt
