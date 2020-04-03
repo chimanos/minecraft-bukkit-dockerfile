@@ -10,7 +10,10 @@ The build jar of Craftbukkit came from  [GetBukkit](https://getbukkit.org/downlo
 ## Tags: 
 | Tag        | Bukkit Version | 
 | ------------- |:-------------:| 
-| latest      | 1.14.4-R0.1-SNAPSHOT | 
+| latest      | 1.15.2 | 
+| 1.15.2      | 1.15.2 |
+| 1.15.1-R0.1-SNAPSHOT      | 1.15.1-R0.1-SNAPSHOT |
+| 1.15-R0.1-SNAPSHOT      | 1.15-R0.1-SNAPSHOT |
 | 1.14.4-R0.1-SNAPSHOT      | 1.14.4-R0.1-SNAPSHOT |
 | 1.14.3-R0.1-SNAPSHOT      | 1.14.3-R0.1-SNAPSHOT |   
 

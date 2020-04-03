@@ -2,7 +2,7 @@
 
 FROM openjdk:8-alpine
 
-ARG BUKKIT_VERSION=1.14.4-R0.1-SNAPSHOT
+ARG BUKKIT_VERSION=1.15.2
 
 WORKDIR /minecraft
 
