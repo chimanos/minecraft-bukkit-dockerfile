@@ -16,16 +16,16 @@ The build jar of Craftbukkit came from  [GetBukkit](https://getbukkit.org/downlo
 
 ## Run
 
-You can run the container with the following command:
+You can run the container with the following command (Remove -d if you don't want to execute the container in background):
 
 `
-    docker run -v /data:/data -p 25565:25565 -e EULA=true --name mc-bukkit chimanos/mc-bukkit
+    docker run -d -v /data:/data -p 25565:25565 -e EULA=true --name mc-bukkit chimanos/mc-bukkit
 `
 
 If you want to run a specific version of bukkit, simply add the version after the docker tag:
 
 `
-    docker run -v /data:/data -p 25565:25565 -e EULA=true --name mc-bukkit chimanos/mc-bukkit:1.14.4-R0.1-SNAPSHOT
+    docker run -d -v /data:/data -p 25565:25565 -e EULA=true --name mc-bukkit chimanos/mc-bukkit:1.14.4-R0.1-SNAPSHOT
 `
 
 All of the config files are in the volume **/data**.
