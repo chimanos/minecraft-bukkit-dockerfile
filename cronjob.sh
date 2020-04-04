@@ -42,5 +42,5 @@ while read url; do
 
     echo $version >> craftbukkit-versions
 
-    echo "Version $version add in the file"
+    echo "Version $version added in the file"
 done < tmp_raw_list_urls
