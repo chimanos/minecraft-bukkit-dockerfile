@@ -2,6 +2,8 @@
 
 #Define URL of craftbukkit versions list TODO: ERROR GESTION
 craftbukkit_versions_url="https://getbukkit.org/download/craftbukkit"
+github_project_url=https://github.com/chimanos/minecraft-bukkit-dockerfile.git
+github_project_name=minecraft-bukkit-dockerfile
 
 echo "**********************************"
 echo "**CRONJOB SCRIPT FOR CRAFTBUKKIT**"
@@ -44,3 +46,26 @@ while read url; do
 
     echo "Version $version added in the file"
 done < tmp_raw_list_urls
+
+echo "Delete tmp files..."
+
+# Delete all tmp files
+rm tmp_raw_versions_list_html
+rm tmp_raw_list_urls
+rm tmp_raw_version_html
+
+#Cloning repository
+git clone $github_project_url
+
+cd $github_project_name
+
+git fetch
+git checkout feat/testcron #Change to master
+git pull
+
+
+
+
+
+
+
