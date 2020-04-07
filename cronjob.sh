@@ -54,14 +54,60 @@ rm tmp_raw_versions_list_html
 rm tmp_raw_list_urls
 rm tmp_raw_version_html
 
+echo "Create request body from versions..."
+
+envs=""
+
+# Parse versions
+while read version; do
+    if [ "$envs" = "" ]
+    then
+        envs="\"TAG=$version\""
+    else
+        envs="$envs,
+        \"TAG=$version\""
+    fi
+done < craftbukkit-versions
+
+# Travis API Body
+body='{
+ "request": {
+     "message": "[Cronjob] - Check for new craftbukkit versions...",
+     "branch":"master",
+     "config": {
+       "merge_mode": "deep_merge_append",
+       "env": [
+         '"$envs"'
+       ]
+     }
+ }
+}'
+
+echo "Launch jobs on master branch using Travis API..."
+
+# Start jobs with the versions list
+curl -s -X POST \
+ -H "Content-Type: application/json" \
+ -H "Accept: application/json" \
+ -H "Travis-API-Version: 3" \
+ -H "Authorization: token $API_TOKEN" \
+ -d "$body" \
+ https://api.travis-ci.com/repo/chimanos%2Fminecraft-bukkit-dockerfile/requests
+
 #Cloning repository
-git clone $github_project_url
+#git clone $github_project_url
+#
+#cd $github_project_name
+#
+#git fetch
+#git checkout feat/testcron #Change to master
+#git pull
 
-cd $github_project_name
+echo "Delete craftbukkit-versions file..."
 
-git fetch
-git checkout feat/testcron #Change to master
-git pull
+# Delete craftbukkit-versions file
+rm craftbukkit-versions
+
 
 
 

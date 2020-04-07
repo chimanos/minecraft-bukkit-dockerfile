@@ -1,35 +1,16 @@
 # Minecraft Bukkit Dockerfile
-[![Build Status](https://api.travis-ci.org/chimanos/minecraft-bukkit-dockerfile.svg?branch=master)](https://travis-ci.org/chimanos/minecraft-bukkit-dockerfile)
+[![Build Status](https://api.travis-ci.org/chimanos/minecraft-bukkit-dockerfile.svg?branch=cronjob)](https://travis-ci.org/chimanos/minecraft-bukkit-dockerfile)
 
-A Dockerfile for build bukkit minecraft server. 
+## Cronjob: 
 
-You can find images on Docker Hub: [chimanos/mc-bukkit](https://cloud.docker.com/repository/docker/chimanos/mc-bukkit/)
+The travis cronjob is use for fetch latest versions of Craftbukkit from [GetBukkit](https://getbukkit.org/download/craftbukkit). 
 
-The build jar of Craftbukkit came from  [GetBukkit](https://getbukkit.org/download/craftbukkit).
+The bash script [cronjob.sh](https://github.com/chimanos/minecraft-bukkit-dockerfile/blob/cronjob/cronjob.sh) scroll the website and get all the Craftbukkit versions and use Travis api for start a new job on the master branche 
+for build docker images for all versions.
 
-## Tags: 
-| Tag        | Bukkit Version | 
-| ------------- |:-------------:| 
-| latest      | 1.15.2 | 
-| 1.15.2      | 1.15.2 |
-| 1.15.1-R0.1-SNAPSHOT      | 1.15.1-R0.1-SNAPSHOT |
-| 1.15-R0.1-SNAPSHOT      | 1.15-R0.1-SNAPSHOT |
-| 1.14.4-R0.1-SNAPSHOT      | 1.14.4-R0.1-SNAPSHOT |
-| 1.14.3-R0.1-SNAPSHOT      | 1.14.3-R0.1-SNAPSHOT |   
 
-## Run
+## Resources: 
 
-You can run the container with the following command (Remove -d if you don't want to execute the container in background):
+- Travis API: [Start jobs using API](https://docs.travis-ci.com/user/triggering-builds)
 
-`
-    docker run -d -v /data:/data -p 25565:25565 -e EULA=true --name mc-bukkit chimanos/mc-bukkit
-`
 
-If you want to run a specific version of bukkit, simply add the version after the docker tag:
-
-`
-    docker run -d -v /data:/data -p 25565:25565 -e EULA=true --name mc-bukkit chimanos/mc-bukkit:1.14.4-R0.1-SNAPSHOT
-`
-
-All of the config files are in the volume **/data**.
- 
