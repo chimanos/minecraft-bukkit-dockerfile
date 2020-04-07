@@ -1,21 +1,11 @@
 # Minecraft Bukkit Dockerfile
-[![Build Status](https://api.travis-ci.org/chimanos/minecraft-bukkit-dockerfile.svg?branch=master)](https://travis-ci.org/chimanos/minecraft-bukkit-dockerfile)
+[![Build Status](https://api.travis-ci.com/chimanos/minecraft-bukkit-dockerfile.svg?branch=master)](https://travis-ci.com/chimanos/minecraft-bukkit-dockerfile)
 
-A Dockerfile for build bukkit minecraft server. 
+A Dockerfile for build Craftbukkit Minecraft server. 
 
 You can find images on Docker Hub: [chimanos/mc-bukkit](https://cloud.docker.com/repository/docker/chimanos/mc-bukkit/)
 
-The build jar of Craftbukkit came from  [GetBukkit](https://getbukkit.org/download/craftbukkit).
-
-## Tags: 
-| Tag        | Bukkit Version | 
-| ------------- |:-------------:| 
-| latest      | 1.15.2 | 
-| 1.15.2      | 1.15.2 |
-| 1.15.1-R0.1-SNAPSHOT      | 1.15.1-R0.1-SNAPSHOT |
-| 1.15-R0.1-SNAPSHOT      | 1.15-R0.1-SNAPSHOT |
-| 1.14.4-R0.1-SNAPSHOT      | 1.14.4-R0.1-SNAPSHOT |
-| 1.14.3-R0.1-SNAPSHOT      | 1.14.3-R0.1-SNAPSHOT |   
+The build jar of Craftbukkit came from [GetBukkit](https://getbukkit.org/download/craftbukkit).
 
 ## Run
 
@@ -32,4 +22,15 @@ If you want to run a specific version of bukkit, simply add the version after th
 `
 
 All of the config files are in the volume **/data**.
+
+## Tags
+
+| Tag        | Bukkit Version | 
+| ------------- |:-------------:| 
+| latest      | 1.15.2 |  
+
+## Automatic Update
+
+This repository is automatically update with the lastest versions of Craftbukkit using a Travis cronjob.
+You can see details on this cronjob [here](https://github.com/chimanos/minecraft-bukkit-dockerfile/tree/cronjob).
  
