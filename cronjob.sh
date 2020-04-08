@@ -94,24 +94,83 @@ curl -s -X POST \
  -d "$body" \
  https://api.travis-ci.com/repo/chimanos%2Fminecraft-bukkit-dockerfile/requests
 
+echo "Create markdown array with tags and versions"
+
+#Loop on craftbukkit-versions and create array
+nbLine=0
+
+tab="\n
+|Tag|Bukkit Version|\n
+|:-------------:|:-------------:|\n"
+
+#Create lines of tags and versions
+while read version; do
+    if [ $nbLine = 0 ]
+    then
+        tab="
+        $tab
+        |latest|$version|\n
+        |$version|$version|\n"
+    else
+        tab="
+        $tab
+        |$version|$version|\n"
+    fi
+
+    ((nbLine=nbLine+1))
+done < craftbukkit-versions
+
+echo "Cloning $github_project_name ..."
+
 #Cloning repository
-#git clone $github_project_url
-#
-#cd $github_project_name
-#
-#git fetch
-#git checkout feat/testcron #Change to master
-#git pull
+git config --global user.email ${GIT_EMAIL}
+git config --global user.name ${GIT_NAME}
+
+git clone $github_project_url
+
+cd $github_project_name
+
+git fetch
+git checkout master
+git pull
+
+#Delete existing tags
+lead='^## Tags$'
+tail='^## Automatic Update$'
+
+echo -e $tab >> tmp_tab
+
+replaceContent=$(sed -e "/$lead/,/$tail/{ /$lead/{p; r tmp_tab
+        }; /$tail/p; d }" README.md)
+
+#Update README
+echo "$replaceContent" > README.md
+
+echo "Delete tmp_tab file"
+
+#Delete tmp_tab file
+rm tmp_tab
+
+echo "Git push of the README..."
+
+#Commit and push the update of the README
+git add .
+git commit -m "Travis CI - $TRAVIS_BUILD_NUMBER: auto-update the README with the latest versions of craftbukkit"
+
+git remote set-url origin https://${GIT_TOKEN}@github.com/chimanos/minecraft-bukkit-dockerfile.git
+
+git push origin master
+
+cd ..
+
+echo "Delete $github_project_name repository"
+
+#Delete repository
+rm -rf $github_project_name
 
 echo "Delete craftbukkit-versions file..."
 
 # Delete craftbukkit-versions file
 rm craftbukkit-versions
 
-
-
-
-
-
-
-
+echo "End of the script"
