@@ -1,40 +1,38 @@
 #!/bin/bash
 
-#Define URL of craftbukkit versions list TODO: ERROR GESTION
+#Define URL of craftbukkit versions list
 craftbukkit_versions_url="https://getbukkit.org/download/craftbukkit"
-github_project_url=https://github.com/chimanos/minecraft-bukkit-dockerfile.git
-github_project_name=minecraft-bukkit-dockerfile
 
 echo "**********************************"
 echo "**CRONJOB SCRIPT FOR CRAFTBUKKIT**"
 echo "**********************************"
 
-echo "-> URL Craftbukkit : $craftbukkit_versions_url"
+echo -e "-> URL Craftbukkit : $craftbukkit_versions_url\n"
 
-echo "-> Launching curl..."
+echo -e "-> Launching curl...\n"
 
 #Save the HTML content in tmp_file
 curl $craftbukkit_versions_url > tmp_raw_versions_list_html
 
-echo "-> Raw HTML save in tmp file : tmp_raw_versions_list_html"
+echo -e "-> Raw HTML save in tmp file : tmp_raw_versions_list_html\n"
 
-echo "-> Start parsing the list of urls..."
+echo -e "-> Start parsing the list of urls...\n"
 
 #Save a list of urls for versions pages in tmp file
 cat tmp_raw_versions_list_html | grep "<a href=\"https://getbukkit.org/get/" | cut -d'"' -f2 > tmp_raw_list_urls
 
-echo "-> List of urls save in tmp file : tmp_rw_list_urls"
+echo -e "-> List of urls save in tmp file : tmp_rw_list_urls\n"
 
-echo "-> Start parsing every urls..."
+echo -e "-> Start parsing every urls...\n"
 
 #Parse all urls
 while read url; do
-    echo "-> Raw HTML for $url save in : tmp_raw_version_html"
+    echo -e "-> Raw HTML for $url save in : tmp_raw_version_html\n"
 
     #Save the HTML content in tmp file
     curl $url > tmp_raw_version_html
 
-    echo "-> Start parsing the version name..."
+    echo -e "-> Start parsing the version name...\n"
 
     #Parse the version name
     versionName=`cat tmp_raw_version_html | grep "<h1>craftbukkit-" | cut -d'>' -f2 | cut -d'<' -f1 | cut -d'-' -f2,3,4,5`
@@ -44,17 +42,17 @@ while read url; do
 
     echo $version >> craftbukkit-versions
 
-    echo "Version $version added in the file"
+    echo -e "-> Version $version added in the file\n"
 done < tmp_raw_list_urls
 
-echo "Delete tmp files..."
+echo -e "-> Delete tmp files...\n"
 
 # Delete all tmp files
 rm tmp_raw_versions_list_html
 rm tmp_raw_list_urls
 rm tmp_raw_version_html
 
-echo "Create request body from versions..."
+echo -e "-> Create request body from versions...\n"
 
 envs=""
 
@@ -83,7 +81,7 @@ body='{
  }
 }'
 
-echo "Launch jobs on master branch using Travis API..."
+echo -e "-> Launch jobs on master branch using Travis API...\n"
 
 # Start jobs with the versions list
 curl -s -X POST \
@@ -94,7 +92,7 @@ curl -s -X POST \
  -d "$body" \
  https://api.travis-ci.com/repo/chimanos%2Fminecraft-bukkit-dockerfile/requests
 
-echo "Create markdown array with tags and versions"
+echo -e "-> Create markdown array with tags and versions\n"
 
 #Loop on craftbukkit-versions and create array
 nbLine=0
@@ -120,21 +118,26 @@ while read version; do
     ((nbLine=nbLine+1))
 done < craftbukkit-versions
 
-echo "Cloning $github_project_name ..."
+echo -e "-> Delete craftbukkit-versions file...\n"
 
-#Cloning repository
+# Delete craftbukkit-versions file
+rm craftbukkit-versions
+
+echo -e "-> Checkout on branche master ...\n"
+
+#Git checkout on master
 git config --global user.email ${GIT_EMAIL}
 git config --global user.name ${GIT_NAME}
 
-git clone $github_project_url
-
-cd $github_project_name
-
 git fetch
+
 git checkout master
+
 git pull
 
-#Delete existing tags
+echo -e "-> Replace existing tags...\n"
+
+#Replace existing tags
 lead='^## Tags$'
 tail='^## Automatic Update$'
 
@@ -146,12 +149,12 @@ replaceContent=$(sed -e "/$lead/,/$tail/{ /$lead/{p; r tmp_tab
 #Update README
 echo "$replaceContent" > README.md
 
-echo "Delete tmp_tab file"
+echo -e "-> Delete tmp_tab file...\n"
 
 #Delete tmp_tab file
 rm tmp_tab
 
-echo "Git push of the README..."
+echo -e "-> Git push of the README...\n"
 
 #Commit and push the update of the README
 git add .
@@ -161,16 +164,4 @@ git remote set-url origin https://${GIT_TOKEN}@github.com/chimanos/minecraft-buk
 
 git push origin master
 
-cd ..
-
-echo "Delete $github_project_name repository"
-
-#Delete repository
-rm -rf $github_project_name
-
-echo "Delete craftbukkit-versions file..."
-
-# Delete craftbukkit-versions file
-rm craftbukkit-versions
-
-echo "End of the script"
+echo -e "-> End of the script\n"

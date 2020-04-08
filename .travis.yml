@@ -2,6 +2,9 @@ sudo: required
 
 language: bash
 
+git:
+  depth: false
+
 before_install:
   - chmod +x cronjob.sh
 
