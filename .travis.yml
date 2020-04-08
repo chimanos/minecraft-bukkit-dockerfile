@@ -8,8 +8,5 @@ git:
 before_install:
   - chmod +x cronjob.sh
 
-#install:
-#  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin //NEED TO LOG IN GIT FOR CHANGELOG
-
 script:
   - ./cronjob.sh

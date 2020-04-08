@@ -92,7 +92,7 @@ curl -s -X POST \
  -d "$body" \
  https://api.travis-ci.com/repo/chimanos%2Fminecraft-bukkit-dockerfile/requests
 
-echo -e "-> Create markdown array with tags and versions\n"
+echo -e "-> Create markdown array with tags and versions...\n"
 
 #Loop on craftbukkit-versions and create array
 nbLine=0
@@ -123,7 +123,7 @@ echo -e "-> Delete craftbukkit-versions file...\n"
 # Delete craftbukkit-versions file
 rm craftbukkit-versions
 
-echo -e "-> Checkout on branche master ...\n"
+echo -e "-> Checkout on master branche...\n"
 
 #Git checkout on master
 git config --global user.email ${GIT_EMAIL}
@@ -143,6 +143,8 @@ tail='^## Automatic Update$'
 
 echo -e $tab >> tmp_tab
 
+echo -e "-> Base array of tags markdown save in : tmp_tab\n"
+
 replaceContent=$(sed -e "/$lead/,/$tail/{ /$lead/{p; r tmp_tab
         }; /$tail/p; d }" README.md)
 
@@ -154,7 +156,7 @@ echo -e "-> Delete tmp_tab file...\n"
 #Delete tmp_tab file
 rm tmp_tab
 
-echo -e "-> Git push of the README...\n"
+echo -e "-> Push the update on master...\n"
 
 #Commit and push the update of the README
 git add .

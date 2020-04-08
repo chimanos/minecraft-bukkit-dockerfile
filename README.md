@@ -1,7 +1,7 @@
 # Minecraft Bukkit Dockerfile
 [![Build Status](https://api.travis-ci.com/chimanos/minecraft-bukkit-dockerfile.svg?branch=cronjob)](https://travis-ci.com/chimanos/minecraft-bukkit-dockerfile)
 
-## Cronjob 
+## Cronjob
 
 The travis cronjob is use for fetch latest versions of Craftbukkit from [GetBukkit](https://getbukkit.org/download/craftbukkit). 
 
