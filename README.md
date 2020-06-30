@@ -27,7 +27,8 @@ All of the config files are in the volume **/data**.
 
  |Tag|Bukkit Version|
  |:-------------:|:-------------:|
- |latest|1.15.2|
+ |latest|1.16.1|
+ |1.16.1|1.16.1|
  |1.15.2|1.15.2|
  |1.15.1-R0.1-SNAPSHOT|1.15.1-R0.1-SNAPSHOT|
  |1.15-R0.1-SNAPSHOT|1.15-R0.1-SNAPSHOT|
